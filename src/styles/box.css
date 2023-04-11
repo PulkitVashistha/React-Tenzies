@@ -1,0 +1,14 @@
+.boxes-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(2, 150px);
+    gap: 5px;
+    width: 310px;
+}
+
+.box {
+    border: 1px solid black;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+}
