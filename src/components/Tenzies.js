@@ -51,12 +51,10 @@ export default function Tenzies() {
     React.useEffect(() => {
         if (numberSet.filter((num) => !num.active).length == 0) {
             setCompletion(true);
-            document.getElementById("roll-button").textContent = "Reset Game";
             document.getElementById("roll-button").addEventListener("click", resetNumberSet);
         }
         return () => {
             setCompletion(false);
-            document.getElementById("roll-button").textContent = "Roll";
             document.getElementById("roll-button").removeEventListener("click", resetNumberSet);
         }
     }, [numberSet]);
@@ -76,7 +74,7 @@ export default function Tenzies() {
                     )
                 }
             </div>
-            <button className="roll-button" id="roll-button" onClick={rollButtonClick}>Roll</button>
+            <button className="roll-button" id="roll-button" onClick={rollButtonClick}>{completion?"Reset Game" : "Roll"}</button>
         </div>
     )
 }
