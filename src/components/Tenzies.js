@@ -1,7 +1,11 @@
 import React from "react";
 import { nanoid } from "nanoid";
+import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 export default function Tenzies() {
+    const { width, height } = useWindowSize()
+    const [completion,setCompletion] = React.useState(false);
     const [numberSet, setNumberSet] = React.useState(() => Array.from({ length: 8 }, () => ({
         "val": Math.floor(Math.random() * 8),
         "id": nanoid(),
@@ -35,28 +39,31 @@ export default function Tenzies() {
         })
     }
 
-    function resetNumberSet(){
+    function resetNumberSet() {
         setNumberSet(Array.from({ length: 8 }, () => ({
             "val": Math.floor(Math.random() * 8),
             "id": nanoid(),
             "active": false
         })));
-        setSelectedNum(()=>null)
+        setSelectedNum(() => null)
     }
 
     React.useEffect(() => {
         if (numberSet.filter((num) => !num.active).length == 0) {
+            setCompletion(true);
             document.getElementById("roll-button").textContent = "Reset Game";
-            document.getElementById("roll-button").addEventListener("click",resetNumberSet);
+            document.getElementById("roll-button").addEventListener("click", resetNumberSet);
         }
-        return ()=>{
+        return () => {
+            setCompletion(false);
             document.getElementById("roll-button").textContent = "Roll";
-            document.getElementById("roll-button").removeEventListener("click",resetNumberSet);
+            document.getElementById("roll-button").removeEventListener("click", resetNumberSet);
         }
     }, [numberSet]);
 
     return (
         <div className="card" id="tenzies">
+            {completion && <Confetti display="none" width={width} height={height}/>}
             <h1>Tenzies</h1>
             <h2>Roll until all the dice are the same. Click each die to freeze it at its current value between rolls.</h2>
             <div className="grid-container">
